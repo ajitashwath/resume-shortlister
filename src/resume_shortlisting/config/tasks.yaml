@@ -18,18 +18,25 @@ analyze_jd:
 
 shortlist_resumes:
   description: >
-    Based on the extracted job requirements, analyze the set of resumes provided and rank them for fit.
-    Evaluate each resume on a scale from 1 to 10.
-    Identify the top 5 candidates and explain why they stand out for the position.
-
-    JD Summary:
-    {jd_summary}
-
-    Resumes:
+    Based on the extracted job requirements, analyze each resume individually and provide a structured evaluation.
+    For each resume, extract the candidate's name and mobile number, then score them on a scale from 1 to 10 based on job fit.
+    Generate 2-3 relevant interview questions for each candidate and provide reasoning for the score.
+    
+    CRITICAL: Format your response as a table with the following exact structure:
+    
+    | Name | Mobile | Score | Questions for Interview | Reasoning |
+    |------|--------|-------|------------------------|-----------|
+    | [Full Name] | [Phone Number] | [Score/10] | [2-3 interview questions] | [Brief explanation of score] |
+    
+    Resumes to analyze:
     {resumes}
 
   expected_output: >
-    A table listing each candidate, their score, and a rationale for their score.
-    Then, a final list of the Top 5 candidates with short justifications for each selection.
+    A properly formatted table with columns: Name, Mobile, Score, Questions for Interview, Reasoning.
+    Each row should contain one candidate's complete information.
+    Score should be a number between 1-10.
+    Extract actual names and phone numbers from resumes.
+    Provide specific interview questions relevant to the job requirements.
+    Include clear reasoning for each score based on skills match, experience level, and qualifications.
 
   agent: resume_analyst
