@@ -1,0 +1,35 @@
+analyze_jd:
+  description: >
+    Carefully analyze the provided job description to extract critical information about the role.
+    Your goal is to summarize the most important requirements the hiring manager is looking for.
+    Break down the description into must-have skills, nice-to-have skills, required experience, and relevant industries.
+    
+    JD:
+    {job_description}
+
+  expected_output: >
+    A structured summary including:
+    - List of must-have skills and qualifications
+    - List of nice-to-have skills
+    - Required years of experience
+    - Preferred industries or domains
+
+  agent: jd_interpreter
+
+shortlist_resumes:
+  description: >
+    Based on the extracted job requirements, analyze the set of resumes provided and rank them for fit.
+    Evaluate each resume on a scale from 1 to 10.
+    Identify the top 5 candidates and explain why they stand out for the position.
+
+    JD Summary:
+    {jd_summary}
+
+    Resumes:
+    {resumes}
+
+  expected_output: >
+    A table listing each candidate, their score, and a rationale for their score.
+    Then, a final list of the Top 5 candidates with short justifications for each selection.
+
+  agent: resume_analyst
