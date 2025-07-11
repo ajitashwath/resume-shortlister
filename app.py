@@ -255,21 +255,6 @@ def parse_ai_response(result_text):
                     })
         
         if not candidates:
-            candidate_info_pattern = r'CANDIDATE INFORMATION:.*?Name:\s*([^\n]+).*?Mobile:\s*([^\n]+)'
-            matches = re.findall(candidate_info_pattern, text, re.IGNORECASE | re.DOTALL)
-            
-            for name, mobile in matches:
-                if name.strip() and name.strip() != "Not found":
-                    candidates.append({
-                        "Name": name.strip(),
-                        "Mobile": mobile.strip(),
-                        "Score": 5.0,
-                        "Questions for Interview": "Please check the detailed response",
-                        "Reasoning": "Extracted from candidate information block"
-                    })
-        
-        
-        if not candidates:
             st.warning("Could not parse AI response into structured format. Check the raw response below.")
             candidates = [
                 {
