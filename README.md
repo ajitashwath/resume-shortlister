@@ -1,54 +1,166 @@
-# ResumeShortlisting Crew
+# Resume Shortlisting Tool 🚀
+An AI-powered resume shortlisting application that uses CrewAI and OpenAI to automatically analyze resumes against job descriptions, extract candidate information, and generate personalized interview questions.
 
-Welcome to the ResumeShortlisting Crew project, powered by [crewAI](https://crewai.com). This template is designed to help you set up a multi-agent AI system with ease, leveraging the powerful and flexible framework provided by crewAI. Our goal is to enable your agents to collaborate effectively on complex tasks, maximizing their collective intelligence and capabilities.
+## ✨ Features
+- **AI-Powered Analysis**: Uses OpenAI GPT models through CrewAI for intelligent resume evaluation
+- **Automatic Information Extraction**: Extracts candidate names, phone numbers, and emails from PDFs
+- **Smart Scoring**: Scores candidates from 1-10 based on job requirement alignment
+- **Interview Question Generation**: Creates personalized interview questions for each candidate
+- **Multiple Export Formats**: Export results as CSV or professionally formatted PDF reports
+- **Interactive Web Interface**: Built with Streamlit for easy use
+- **Configurable Thresholds**: Adjustable scoring thresholds and processing limits
+- **Real-time Processing**: Live progress tracking during resume analysis
 
-## Installation
+## 🛠️ Technology Stack
+- **Frontend**: Streamlit
+- **AI Framework**: CrewAI with OpenAI GPT-4o-mini
+- **PDF Processing**: PyPDF2
+- **Report Generation**: ReportLab
+- **Data Processing**: Pandas
+- **Configuration**: YAML
 
-Ensure you have Python >=3.10 <3.14 installed on your system. This project uses [UV](https://docs.astral.sh/uv/) for dependency management and package handling, offering a seamless setup and execution experience.
+## 📋 Prerequisites
+- Python ≥ 3.8
+- OpenAI API Key ([Get one here](https://platform.openai.com/account/api-keys))
 
-First, if you haven't already, install uv:
+## 🚀 Installation
 
-```bash
-pip install uv
-```
-
-Next, navigate to your project directory and install the dependencies:
-
-(Optional) Lock the dependencies and install them by using the CLI command:
-```bash
-crewai install
-```
-### Customizing
-
-**Add your `OPENAI_API_KEY` into the `.env` file**
-
-- Modify `src/resume_shortlisting/config/agents.yaml` to define your agents
-- Modify `src/resume_shortlisting/config/tasks.yaml` to define your tasks
-- Modify `src/resume_shortlisting/crew.py` to add your own logic, tools and specific args
-- Modify `src/resume_shortlisting/main.py` to add custom inputs for your agents and tasks
-
-## Running the Project
-
-To kickstart your crew of AI agents and begin task execution, run this from the root folder of your project:
+### Method 1: Using pip (Recommended)
 
 ```bash
-$ crewai run
+git clone https://github.com/ajitashwath/resume-shortlister.git
+cd resume-shortlister
+
+pip install -e .
+
+pip install -e ".[dev]"
 ```
 
-This command initializes the Resume-Shortlisting Crew, assembling the agents and assigning them tasks as defined in your configuration.
+### Method 2: Using Poetry
 
-This example, unmodified, will run the create a `report.md` file with the output of a research on LLMs in the root folder.
+```bash
+curl -sSL https://install.python-poetry.org | python3 -
 
-## Understanding Your Crew
+git clone https://github.com/ajitashwath/resume-shortlister.git
+cd resume-shortlister
+poetry install
+```
 
-The Resume-Shortlisting Crew is composed of multiple AI agents, each with unique roles, goals, and tools. These agents collaborate on a series of tasks, defined in `config/tasks.yaml`, leveraging their collective skills to achieve complex objectives. The `config/agents.yaml` file outlines the capabilities and configurations of each agent in your crew.
+### Method 3: Manual Installation
 
-## Support
+```bash
+git clone https://github.com/ajitashwath/resume-shortlister.git
+cd resume-shortlister
 
-For support, questions, or feedback regarding the ResumeShortlisting Crew or crewAI.
-- Visit our [documentation](https://docs.crewai.com)
-- Reach out to us through our [GitHub repository](https://github.com/joaomdmoura/crewai)
-- [Join our Discord](https://discord.com/invite/X4JWnZnxPb)
-- [Chat with our docs](https://chatg.pt/DWjSBZn)
+# Create virtual environment
+python -m venv venv
+source venv/bin/activate
 
-Let's create wonders together with the power and simplicity of crewAI.
+pip install streamlit crewai crewai-tools pandas PyPDF2 reportlab PyYAML pydantic openai
+```
+
+## 🏃‍♂️ Quick Start
+
+1. **Run the Application**:
+   ```bash
+   streamlit run app.py
+   ```
+
+2. **Open in Browser**: The app will automatically open at `http://localhost:8501`
+
+3. **Enter API Key**: Input your OpenAI API key in the configuration section
+
+4. **Upload Resumes**: Upload PDF resumes (up to 20 files)
+
+5. **Add Job Description**: Paste the complete job description
+
+6. **Analyze**: Click "Analyze and Shortlist Resumes" to start processing
+
+## 📊 Usage Guide
+
+### Configuration Options
+
+| Setting | Description | Default |
+|---------|-------------|---------|
+| Maximum Resumes | Number of resumes to process | 10 |
+| Score Threshold | Minimum score for qualification | 7.0 |
+| API Model | OpenAI model to use | gpt-4o-mini |
+
+### Input Requirements
+
+**Job Description**: Include the following for best results:
+- Required skills and technologies
+- Experience level requirements
+- Educational qualifications
+- Job responsibilities
+- Company culture fit criteria
+
+**Resume Files**:
+- Format: PDF only
+- Size: No specific limit (reasonable file sizes recommended)
+- Content: Should include contact information, skills, and experience
+
+### Output Format
+
+The tool generates a structured table with:
+- **Name**: Extracted from resume
+- **Mobile**: Phone number extracted from resume
+- **Score**: 1-10 rating based on job fit
+- **Questions for Interview**: 2-3 personalized questions
+- **Reasoning**: Explanation for the score
+
+## 🔧 Configuration Files
+
+### agents.yaml
+Defines the AI agents' roles and capabilities:
+- `jd_interpreter`: Analyzes job descriptions
+- `resume_analyst`: Evaluates resumes and generates questions
+
+### tasks.yaml
+Defines the workflow tasks:
+- `analyze_jd`: Extracts key requirements from job descriptions
+- `shortlist_resumes`: Analyzes and scores candidates
+
+## 📁 Project Structure
+
+```
+resume-shortlisting-tool/
+├── app.py                              # Main Streamlit application
+├── src/
+│   └── resume_shortlisting/
+│       ├── __init__.py
+│       ├── main.py                     # CLI entry point
+│       ├── crew.py                     # CrewAI configuration
+│       ├── config/
+│       │   ├── agents.yaml             # AI agents configuration
+│       │   └── tasks.yaml              # Task definitions
+│       └── tools/
+│           ├── __init__.py
+│           └── custom_tool.py          # PDF text extraction tool
+├── pyproject.toml                      # Project configuration
+├── README.md                           # This file
+└── requirements.txt                    # Dependencies (optional)
+```
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+### Contribution Guidelines
+- Follow the existing code style
+- Add tests for new features
+- Update documentation as needed
+- Ensure all tests pass before submitting
+
+
+## 🙏 Acknowledgments
+
+- [CrewAI](https://crewai.com/) for the multi-agent AI framework
+- [Streamlit](https://streamlit.io/) for the web application framework
+- [OpenAI](https://openai.com/) for the language model API
+- [ReportLab](https://www.reportlab.com/) for PDF generation
+
